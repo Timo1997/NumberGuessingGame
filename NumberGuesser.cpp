@@ -1,10 +1,18 @@
 #include <iostream>
 #include "NumberGuesser.h"
 #include <limits>
+#include <ctime> 
+#include <random>
 
 NumberGuesser::NumberGuesser(int _maxAttempts, int _guessMin, int _guessMax) : attempts(0), isGameOver(false), maxAttempts(_maxAttempts), guessMin(_guessMin), guessMax(_guessMax){
-    // Initialize the number to guess between 0 and 10
-    numberToGuess = guessMin + rand() % (guessMax + 1); // Random number between 0 and 10
+    // Create a random device to seed the random engine to create a random number
+    std::random_device rd;  
+    std::mt19937 gen(rd()); 
+    std::uniform_int_distribution<> distrib(guessMin, guessMax);
+    numberToGuess = distrib(gen);
+
+    // Initialize the number to guess guessMin  and guessMax
+    numberToGuess = guessMin + rand() % (guessMax + 1); 
     std::cout << "Welcome to the Number Guesser game! Try to guess the number I'm thinking of between " << guessMin << " and " << guessMax << "." << std::endl;
     std::cout << "You can type 'surrender' to give up at any time." << std::endl;
     std::cout << "Guess a number (attempt 1): ";
